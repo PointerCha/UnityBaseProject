@@ -59,7 +59,12 @@ public class CustomCube : MonoBehaviour
         //방향을 1이라 생각하고 vertical 즉 크기를 곱하여 크기를 늘린 것.
         //그곳에 -1, 1을 곱한 상황에 따라 뒤집어져서 즉 오른쪽과 왼쪽을 제어할 수 있도록 된다.
         //게임 상에서는 forward, 즉 vector를 무조건 1로 한다.
-        refTransform.position = refTransform.position + refTransform.forward * vertical * moveSpeed * Time.deltaTime;
+        refTransform.position = refTransform.position 
+            + refTransform.forward * vertical * moveSpeed * Time.deltaTime;
+
+        //회전
+        refTransform.rotation = refTransform.rotation
+            * Quaternion.Euler(0f, horizontal * rotationSpeed * Time.deltaTime, 0f);
 
         //회전 축 -> 현재의 Rotate 값에 돌린 양의 값을 더한다.
         refTransform.Rotate(new Vector3(0f, horizontal * rotationSpeed * Time.deltaTime, 0f));
