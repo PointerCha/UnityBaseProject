@@ -13,7 +13,7 @@ public class CustomCube : MonoBehaviour
 
     //x축의 이동 속도
     [SerializeField]
-    private float xSpeed = 0.01f;
+    private float moveSpeed = 0.01f;
     void Start()
     {
         Debug.Log("Start");
@@ -28,8 +28,23 @@ public class CustomCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update");
+        //입력처리(방향키)
+        //좌우 방향키 입력 (A키, D키 / 왼쪽, 오른쪽 방향키)
+        //-1, 1, 0 중 하나를 받음.
+        float horizontal = Input.GetAxis("Horizontal");
 
-        refTransform.Translate(xSpeed, 0f, 0f);
+        //상하 방향키 입력(w키, s키 / 위쪽, 아래쪽)
+        float vertical = Input.GetAxis("Vertical");
+
+        // 입력은 방향 -> 오른쪽 입력 -> 오른쪽으로 이동.
+        // 입력은 방향 -> 왼쪽 입력 -> 왼쪽으로 이동.
+
+        //Debug.Log(horizontal);
+
+        //등속도 운동.
+        // s = 속도(빠르기);
+  
+        //프레임마다 이동
+        refTransform.Translate(moveSpeed * horizontal * Time.deltaTime, moveSpeed * vertical * Time.deltaTime, 0f);
     }
 }
