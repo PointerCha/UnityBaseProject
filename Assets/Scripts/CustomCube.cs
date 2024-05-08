@@ -14,6 +14,8 @@ public class CustomCube : MonoBehaviour
     //x축의 이동 속도
     [SerializeField]
     private float moveSpeed = 0.01f;
+    [SerializeField]
+    private float rotationSpeed = 360f;
     void Start()
     {
         Debug.Log("Start");
@@ -43,8 +45,23 @@ public class CustomCube : MonoBehaviour
 
         //등속도 운동.
         // s = 속도(빠르기);
-  
+
         //프레임마다 이동
-        refTransform.Translate(moveSpeed * horizontal * Time.deltaTime, moveSpeed * vertical * Time.deltaTime, 0f);
+        //refTransform.Translate(moveSpeed * horizontal * Time.deltaTime, moveSpeed * vertical * Time.deltaTime, 0f);
+
+        //이동 z축 -> 물체 기준 앞뒤 이동.
+        //refTransform.position = refTransform.position+ new Vector3(0f, 0f, vertical * moveSpeed * Time.deltaTime);
+        //위에 코드로 실행 시 방향만 바꾸지 이동은 제대로 하지 않는다.
+        //고정 값을 이용해 앞 방향이 어디인지 알려준다. 
+        //forward = 물체 기준 앞 방향을 알려준다.
+        //회전 하지 않았을 때의 forward는 0, 0, 1
+        //위치에 방향을 더한 상황
+        //방향을 1이라 생각하고 vertical 즉 크기를 곱하여 크기를 늘린 것.
+        //그곳에 -1, 1을 곱한 상황에 따라 뒤집어져서 즉 오른쪽과 왼쪽을 제어할 수 있도록 된다.
+        //게임 상에서는 forward, 즉 vector를 무조건 1로 한다.
+        refTransform.position = refTransform.position + refTransform.forward * vertical * moveSpeed * Time.deltaTime;
+
+        //회전 축 -> 현재의 Rotate 값에 돌린 양의 값을 더한다.
+        refTransform.Rotate(new Vector3(0f, horizontal * rotationSpeed * Time.deltaTime, 0f));
     }
 }
